@@ -1,3 +1,4 @@
+import { createContext, useContext } from "react";
 import styled from "styled-components";
 
 const StyledTable = styled.div`
@@ -63,10 +64,12 @@ const Empty = styled.p`
 
 const TableContext = createContext();
 
-export const Table = ({ columns, children }) => {
-  <TableContext.Provider value={{ columns }}>
-    <StyledTable role="table">{children}</StyledTable >
-  </TableContext.Provider>
+const Table = ({ columns, children }) => {
+  return (
+    <TableContext.Provider value={{ columns }}>
+      <StyledTable role="table">{children}</StyledTable >
+    </TableContext.Provider>
+  )
 }
 
 const Header = ({ children }) => {
@@ -89,11 +92,16 @@ const Row = ({ children }) => {
   )
 }
 
-const Body = ({ children }) => {
-
+const Body = ({ data, render }) => {
+  return data.length
+    ? <StyledBody>{data.map(render)}</StyledBody>
+    : <Empty>No data to show at this moment</Empty>
 }
+
 
 Table.Header = Header;
 Table.Row = Row;
 Table.Body = Body;
 Table.Footer = Footer;
+
+export { Table }
