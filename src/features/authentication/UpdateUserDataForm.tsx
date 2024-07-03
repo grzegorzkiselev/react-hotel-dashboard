@@ -35,7 +35,7 @@ function UpdateUserDataForm() {
           // Resetting form using .reset() that's available on all HTML form elements, otherwise the old filename will stay displayed in the UI
           e.target.reset();
         },
-      }
+      },
     );
   }
 

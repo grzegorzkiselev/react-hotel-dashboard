@@ -15,7 +15,7 @@ function CreateCabinForm(
   }: {
     cabinToEdit: Partial<{ id: string, editValues: string}>,
     onClose?: () => void
-  }
+  },
 ) {
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditSession = Boolean(editId);
@@ -39,7 +39,7 @@ function CreateCabinForm(
         { onSuccess: () => {
           reset();
           onClose?.();
-        }}
+        } },
       );
     } else {
       createCabin(
@@ -47,7 +47,7 @@ function CreateCabinForm(
         { onSuccess: () => {
           reset();
           onClose?.();
-        }}
+        } },
       );
     }
   };
@@ -68,7 +68,7 @@ function CreateCabinForm(
           disabled={isWorking}
           {...register(
             "name",
-            { required: "This field is required" }
+            { required: "This field is required" },
           )}
         />
       </FormRow>
@@ -86,7 +86,7 @@ function CreateCabinForm(
                 value: 1,
                 message: "Capacity should be at least 1",
               },
-            }
+            },
           )}
         />
       </FormRow>
@@ -104,7 +104,7 @@ function CreateCabinForm(
                 value: 1,
                 message: "Price should be at least 1",
               },
-            }
+            },
           )}
         />
       </FormRow>
@@ -122,7 +122,7 @@ function CreateCabinForm(
               validate: (value) => {
                 return value <= getValues().regular_price || "Discount should be less than regular price";
               },
-            }
+            },
           )}
         />
       </FormRow>
@@ -134,7 +134,7 @@ function CreateCabinForm(
           disabled={isWorking}
           {...register(
             "description",
-            { required: "This field is required" }
+            { required: "This field is required" },
           )}
         />
       </FormRow>
@@ -147,7 +147,7 @@ function CreateCabinForm(
           disabled={isWorking}
           {...register(
             "image",
-            { required: isEditSession ? false : "This field is required" }
+            { required: isEditSession ? false : "This field is required" },
           )}
         />
       </FormRow>

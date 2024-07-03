@@ -69,8 +69,8 @@ const Table = ({ columns, children }) => {
     <TableContext.Provider value={{ columns }}>
       <StyledTable role="table">{children}</StyledTable >
     </TableContext.Provider>
-  )
-}
+  );
+};
 
 const Header = ({ children }) => {
   const { columns } = useContext(TableContext);
@@ -79,8 +79,8 @@ const Header = ({ children }) => {
     <StyledHeader role="row" as="header" columns={columns}>
       {children}
     </StyledHeader>
-  )
-}
+  );
+};
 
 const Row = ({ children }) => {
   const { columns } = useContext(TableContext);
@@ -89,14 +89,14 @@ const Row = ({ children }) => {
     <StyledRow role="row" columns={columns}>
       {children}
     </StyledRow>
-  )
-}
+  );
+};
 
 const Body = ({ data, render }) => {
   return data.length
     ? <StyledBody>{data.map(render)}</StyledBody>
-    : <Empty>No data to show at this moment</Empty>
-}
+    : <Empty>No data to show at this moment</Empty>;
+};
 
 
 Table.Header = Header;
@@ -104,4 +104,4 @@ Table.Row = Row;
 Table.Body = Body;
 Table.Footer = Footer;
 
-export { Table }
+export { Table };

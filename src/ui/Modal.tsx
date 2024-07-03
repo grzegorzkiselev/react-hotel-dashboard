@@ -102,7 +102,7 @@ export const Window = ({ children, name }) => {
         {cloneElement(children, { onClose: close })}
       </StyledModal>
     </Overlay>,
-    document.body
+    document.body,
   );
 };
 
