@@ -1,24 +1,14 @@
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import {
-  HiPencil,
-  HiTrash,
-  HiEye,
-  HiArrowUpOnSquare,
-  HiArrowDownOnSquare,
-} from "react-icons/hi2";
+import styled from "styled-components";
 
-import Tag from "ui/Tag";
-import Menus from "ui/Menus";
-import Modal from "ui/Modal";
-import ConfirmDelete from "ui/ConfirmDelete";
-import Table from "ui/Table";
+import { Table } from "../../ui/Table";
 
-import { useDeleteBooking } from "features/bookings/useDeleteBooking";
-import { formatCurrency } from "utils/helpers";
-import { formatDistanceFromNow } from "utils/helpers";
-import { useCheckout } from "features/check-in-out/useCheckout";
-import { format, isToday } from "date-fns";
+import { format } from "date-fns";
+import Tag from "../../ui/Tag";
+import { formatCurrency } from "../../utils/helpers";
+// import { useDeleteBooking } from "./useDeleteBooking";
+// import { useCheckout } from "features/check-in-out/useCheckout";
+// import { formatCurrency, formatDistanceFromNow } from "utils/helpers";
 
 // v1
 // const TableRow = styled.div`
@@ -60,66 +50,67 @@ const Amount = styled.div`
   font-weight: 500;
 `;
 
-function BookingRow({
+export const BookingRow = ({
   booking: {
-    id: bookingId,
+    id: booking_id,
     created_at,
-    startDate,
-    endDate,
-    numNights,
-    numGuests,
-    totalPrice,
+    start_date,
+    end_date,
+    num_nights,
+    num_guests,
+    total_price,
     status,
-    guests: { fullName: guestName, email },
-    cabins: { name: cabinName },
+    guests: { full_name: guest_name, email },
+    cabins: { name: cabin_name },
   },
-}) {
-  const { mutate: deleteBooking, isLoading: isDeleting } = useDeleteBooking();
-  const { mutate: checkout, isLoading: isCheckingOut } = useCheckout();
+}) => {
+  // const { mutate: deleteBooking, isLoading: isDeleting } = useDeleteBooking();
+  // const { mutate: checkout, isLoading: isCheckingOut } = useCheckout();
 
   const navigate = useNavigate();
 
   // We will not allow editing at this point, as it's too complex for bookings... People just need to delete a booking and create a new one
 
   const statusToTagName = {
-    unconfirmed: "blue",
+    "unconfirmed": "blue",
     "checked-in": "green",
     "checked-out": "silver",
   };
 
   return (
-    <Table.Row role='row'>
-      <Cabin>{cabinName}</Cabin>
+    // role='row'
+    <Table.Row>
+      <Cabin>{cabin_name}</Cabin>
 
       <Stacked>
-        <span>{guestName}</span>
+        <span>{guest_name}</span>
         <span>{email}</span>
       </Stacked>
 
       <Stacked>
-        <span>
-          {isToday(new Date(startDate))
+        {/* <span>
+          {isToday(new Date(start_date))
             ? "Today"
-            : formatDistanceFromNow(startDate)}{" "}
-          &rarr; {numNights} night stay
-        </span>
+            : formatDistanceFromNow(start_date)}{" "}
+          &rarr; {num_nights} night stay
+        </span> */}
         <span>
-          {format(new Date(startDate), "MMM dd yyyy")} &mdash;{" "}
-          {format(new Date(endDate), "MMM dd yyyy")}
+          {format(new Date(start_date), "MMM dd yyyy")} &mdash;{" "}
+          {format(new Date(end_date), "MMM dd yyyy")}
         </span>
       </Stacked>
 
       <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
 
-      <Amount>{formatCurrency(totalPrice)}</Amount>
+      <Amount>{formatCurrency(total_price)}</Amount>
 
       {/* VIDEO we could export this into own component... */}
-      <Modal>
+      {/* <Modal>
         <Menus.Menu>
-          <Menus.Toggle id={bookingId} />
-          <Menus.List id={bookingId}>
+          <Menus.Toggle id={booking_id} />
+          <Menus.List id={booking_id}>
             <Menus.Button
-              onClick={() => navigate(`/bookings/${bookingId}`)}
+              onClick={() => navigate(`/bookings/${booking_id}`)}
               icon={<HiEye />}
             >
               See details
@@ -127,7 +118,7 @@ function BookingRow({
 
             {status === "unconfirmed" && (
               <Menus.Button
-                onClick={() => navigate(`/checkin/${bookingId}`)}
+                onClick={() => navigate(`/checkin/${booking_id}`)}
                 icon={<HiArrowDownOnSquare />}
               >
                 Check in
@@ -136,7 +127,7 @@ function BookingRow({
 
             {status === "checked-in" && (
               <Menus.Button
-                onClick={() => checkout(bookingId)}
+                onClick={() => checkout(booking_id)}
                 disabled={isCheckingOut}
                 icon={<HiArrowUpOnSquare />}
               >
@@ -145,25 +136,25 @@ function BookingRow({
             )}
 
             <Menus.Button icon={<HiPencil />}>Edit booking</Menus.Button>
-            {/* <Menus.Button>Delete</Menus.Button> */}
+            <Menus.Button>Delete</Menus.Button>
 
             {/* Now it gets a bit confusing... */}
-            <Modal.Toggle opens='delete'>
+      {/* <Modal.Toggle opens='delete'>
               <Menus.Button icon={<HiTrash />}>Delete booking</Menus.Button>
             </Modal.Toggle>
           </Menus.List>
-        </Menus.Menu>
+        </Menus.Menu> */}
 
-        {/* This needs to be OUTSIDE of the menu, which in no problem. The compound component gives us this flexibility */}
-        <Modal.Window name='delete'>
+      {/* This needs to be OUTSIDE of the menu, which in no problem. The compound component gives us this flexibility */}
+      {/* <Modal.Window name='delete'>
           <ConfirmDelete
             resource='booking'
             // These options will be passed wherever the function gets called, and they determine what happens next
-            onConfirm={(options) => deleteBooking(bookingId, options)}
+            onConfirm={(options) => deleteBooking(booking_id, options)}
             disabled={isDeleting}
           />
         </Modal.Window>
-      </Modal>
+      </Modal> */}
 
       {/* <div>
         <ButtonWithConfirm
@@ -180,6 +171,4 @@ function BookingRow({
       </div> */}
     </Table.Row>
   );
-}
-
-export default BookingRow;
+};

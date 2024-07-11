@@ -1,4 +1,3 @@
-/** eslint-disable semi */
 import { useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 
@@ -61,7 +60,7 @@ export const Filter = ({ filterField, options }) => {
           disabled={option.value === currentFilter}
         >
           {option.label}
-        </FilterButton >
+        </FilterButton>
       )) }
 
     </StyledFilter>
