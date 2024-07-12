@@ -1,9 +1,7 @@
-/** eslint-disable react-refresh/only-export-components */
-/** eslint-disable @typescript-eslint/no-unused-vars */
-/** eslint-disable semi */
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
+import { BOOKINGS_PER_PAGE } from "../utils/constants";
 
 const StyledPagination = styled.div`
   display: flex;
@@ -64,14 +62,13 @@ const PaginationButton = styled.button`
   }
 `;
 
-const PER_PAGE = 10;
 export const Pagination = ({ count }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = !searchParams.get("page")
     ? 1
     : Number(searchParams.get("page"));
 
-  const pageCount = Math.ceil(count / PER_PAGE);
+  const pageCount = Math.ceil(count / BOOKINGS_PER_PAGE);
   const nextPage = () => {
     const next = currentPage === pageCount
       ? currentPage
@@ -96,14 +93,18 @@ export const Pagination = ({ count }) => {
 
   return (
     <StyledPagination>
-      <p>Showing <span>
-        {(currentPage - 1) * PER_PAGE + 1}
-      </span> to <span>
-        { currentPage === pageCount
-          ? count
-          : (currentPage + 1) * PER_PAGE
-        }
-      </span> of <span>{count}</span></p>
+      <p>
+        Showing from <span>
+          {(currentPage - 1) * BOOKINGS_PER_PAGE + 1}
+        </span> to <span>
+          {currentPage === pageCount
+            ? count
+            : currentPage * BOOKINGS_PER_PAGE
+          }
+        </span> of <span>
+          {count}
+        </span>
+      </p>
 
       <Buttons>
         <PaginationButton
