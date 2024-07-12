@@ -15,7 +15,6 @@ export const useBookings = () => {
 
   const [field, direction] = sortByRaw.split("-");
   const sortBy = { field, direction };
-  console.log(sortBy);
 
   const {
     isLoading,
