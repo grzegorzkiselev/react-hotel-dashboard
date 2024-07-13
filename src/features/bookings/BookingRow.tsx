@@ -1,9 +1,12 @@
+/** eslint-disable @typescript-eslint/no-unused-vars */
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+import { format } from "date-fns";
 import { Table } from "../../ui/Table";
 
-import { format } from "date-fns";
+import { HiEye } from "react-icons/hi2";
+import { Menus } from "../../ui/Menus";
 import Tag from "../../ui/Tag";
 import { formatCurrency } from "../../utils/helpers";
 // import { useDeleteBooking } from "./useDeleteBooking";
@@ -53,10 +56,13 @@ const Amount = styled.div`
 export const BookingRow = ({
   booking: {
     id: booking_id,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     created_at,
     start_date,
     end_date,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     num_nights,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     num_guests,
     total_price,
     status,
@@ -103,6 +109,17 @@ export const BookingRow = ({
       <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
 
       <Amount>{formatCurrency(total_price)}</Amount>
+
+      <Menus.Menu>
+        <Menus.Toggle id={booking_id} />
+        <Menus.List id={booking_id}>
+          <Menus.Button
+            icon={<HiEye />}
+            onClick={() => navigate(`/bookings/${booking_id}`)}
+          >See details
+          </Menus.Button>
+        </Menus.List>
+      </Menus.Menu>
 
       {/* VIDEO we could export this into own component... */}
       {/* <Modal>

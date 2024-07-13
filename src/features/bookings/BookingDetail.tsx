@@ -1,22 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
-import Spinner from "ui/Spinner";
+import { useMoveBack } from "../../hooks/useMoveBack";
+import { deleteBooking } from "../../services/apiBookings";
+import Button from "../../ui/Button";
+import ButtonGroup from "../../ui/ButtonGroup";
+import ButtonText from "../../ui/ButtonText";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import Empty from "../../ui/Empty";
+import Heading from "../../ui/Heading";
+import { Modal } from "../../ui/Modal";
+import Row from "../../ui/Row";
+import Spinner from "../../ui/Spinner";
+import Tag from "../../ui/Tag";
 import BookingDataBox from "./BookingDataBox";
-import Row from "ui/Row";
-import Heading from "ui/Heading";
-import Tag from "ui/Tag";
-import ButtonGroup from "ui/ButtonGroup";
-import Button from "ui/Button";
-import Modal from "ui/Modal";
-import ConfirmDelete from "ui/ConfirmDelete";
-
-import { useBooking } from "features/bookings/useBooking";
-import { useDeleteBooking } from "./useDeleteBooking";
-import { useMoveBack } from "hooks/useMoveBack";
-import { useCheckout } from "features/check-in-out/useCheckout";
-import ButtonText from "ui/ButtonText";
-import Empty from "ui/Empty";
+import { useBooking } from "./useBooking";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -25,15 +22,19 @@ const HeadingGroup = styled.div`
 `;
 
 function BookingDetail() {
-  const { booking } = useBooking();
-  const { mutate: deleteBooking, isLoading: isDeleting } = useDeleteBooking();
-  const { mutate: checkout, isLoading: isCheckingOut } = useCheckout();
+  const { booking, isLoading } = useBooking();
+  // const { mutate: deleteBooking, isLoading: isDeleting } = useDeleteBooking();
+  // const { mutate: checkout, isLoading: isCheckingOut } = useCheckout();
 
   const moveBack = useMoveBack();
   const navigate = useNavigate();
 
-  // if (isLoading) return <Spinner />;
-  // if (!booking) return <Empty resource='booking' />;
+  if (isLoading) {
+    return <Spinner />;
+  }
+  if (!booking) {
+    return <Empty resource='booking' />;
+  }
 
   const statusToTagName = {
     unconfirmed: "blue",
@@ -56,7 +57,7 @@ function BookingDetail() {
 
       <BookingDataBox booking={booking} />
 
-      <ButtonGroup>
+      {/* <ButtonGroup>
         {status === "unconfirmed" && (
           <Button onClick={() => navigate(`/checkin/${bookingId}`)}>
             Check in
@@ -86,7 +87,7 @@ function BookingDetail() {
         <Button variation='secondary' onClick={moveBack}>
           Back
         </Button>
-      </ButtonGroup>
+      </ButtonGroup > */}
     </>
   );
 }
