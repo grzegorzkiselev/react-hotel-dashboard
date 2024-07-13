@@ -12,17 +12,21 @@ import { Menus } from "../../ui/Menus";
 
 const Img = styled.img<ImgHTMLAttributes<HTMLImageElement>>`
   transform: scale(1.5) translateX(-7px);
-  /* transform: scale(1.66666) translateX(-2px); */
-  oject-position: center;
+
   display: block;
-  object-fit: cover;
+
   aspect-ratio: 3 / 2;
   width: 6.4rem;
+
+  object-fit: cover;
+
+  /* transform: scale(1.66666) translateX(-2px); */
+  oject-position: center;
 `;
 
 const Cabin = styled.div`
-  font-size: 1.6rem;
   font-family: Sono;
+  font-size: 1.6rem;
   font-weight: 600;
   color: var(--color-grey-600);
 `;

@@ -1,24 +1,23 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useMoveBack } from "../../hooks/useMoveBack";
-import { deleteBooking } from "../../services/apiBookings";
-import Button from "../../ui/Button";
-import ButtonGroup from "../../ui/ButtonGroup";
 import ButtonText from "../../ui/ButtonText";
-import ConfirmDelete from "../../ui/ConfirmDelete";
 import Empty from "../../ui/Empty";
 import Heading from "../../ui/Heading";
-import { Modal } from "../../ui/Modal";
 import Row from "../../ui/Row";
-import Spinner from "../../ui/Spinner";
 import Tag from "../../ui/Tag";
 import BookingDataBox from "./BookingDataBox";
 import { useBooking } from "./useBooking";
+import { HiArrowDownOnSquare } from "react-icons/hi2";
+import ButtonGroup from "../../ui/ButtonGroup";
+import { Menus } from "../../ui/Menus";
+import Spinner from "../../ui/Spinner";
+import { useNavigate } from "react-router-dom";
+import Button from "../../ui/Button";
 
 const HeadingGroup = styled.div`
+  align-items: center;
   display: flex;
   gap: 2.4rem;
-  align-items: center;
 `;
 
 function BookingDetail() {
@@ -57,6 +56,19 @@ function BookingDetail() {
 
       <BookingDataBox booking={booking} />
 
+      <ButtonGroup>
+        {status === "unconfirmed" && <Button
+          icon={<HiArrowDownOnSquare />}
+          onClick={() => navigate(`/checkIn/${booking_id}`)}
+        >
+        Check in
+        </Button>}
+
+        <Button variation='secondary' onClick={moveBack}>
+          Back
+        </Button>
+      </ButtonGroup >
+
       {/* <ButtonGroup>
         {status === "unconfirmed" && (
           <Button onClick={() => navigate(`/checkin/${bookingId}`)}>
@@ -82,12 +94,7 @@ function BookingDetail() {
               disabled={isDeleting}
             />
           </Modal.Window>
-        </Modal>
-
-        <Button variation='secondary' onClick={moveBack}>
-          Back
-        </Button>
-      </ButtonGroup > */}
+        </Modal> */}
     </>
   );
 }

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { format } from "date-fns";
 import { Table } from "../../ui/Table";
 
-import { HiEye } from "react-icons/hi2";
+import { HiArrowDownOnSquare, HiEye } from "react-icons/hi2";
 import { Menus } from "../../ui/Menus";
 import Tag from "../../ui/Tag";
 import { formatCurrency } from "../../utils/helpers";
@@ -116,8 +116,15 @@ export const BookingRow = ({
           <Menus.Button
             icon={<HiEye />}
             onClick={() => navigate(`/bookings/${booking_id}`)}
-          >See details
+          >
+            See details
           </Menus.Button>
+          {status === "unconfirmed" && <Menus.Button
+            icon={<HiArrowDownOnSquare />}
+            onClick={() => navigate(`/checkIn/${booking_id}`)}
+          >
+            Check in
+          </Menus.Button>}
         </Menus.List>
       </Menus.Menu>
 

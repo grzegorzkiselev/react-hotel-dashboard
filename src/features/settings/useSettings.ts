@@ -11,7 +11,9 @@ export const useSettings = () => {
     queryFn: getSettings,
   });
 
-  console.error(error);
+  if (error) {
+    throw error;
+  }
 
-  return { isLoading, error, settings };
+  return { isLoading, settings };
 };
