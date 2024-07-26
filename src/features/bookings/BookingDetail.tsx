@@ -1,18 +1,21 @@
+import { HiArrowDownOnSquare, HiArrowUpOnSquare } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useMoveBack } from "../../hooks/useMoveBack";
+import Button from "../../ui/Button";
+import ButtonGroup from "../../ui/ButtonGroup";
 import ButtonText from "../../ui/ButtonText";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 import Empty from "../../ui/Empty";
 import Heading from "../../ui/Heading";
+import { Modal } from "../../ui/Modal";
 import Row from "../../ui/Row";
+import Spinner from "../../ui/Spinner";
 import Tag from "../../ui/Tag";
+import { useCheckout } from "../check-in-out/useCheckout";
 import BookingDataBox from "./BookingDataBox";
 import { useBooking } from "./useBooking";
-import { HiArrowDownOnSquare } from "react-icons/hi2";
-import ButtonGroup from "../../ui/ButtonGroup";
-import { Menus } from "../../ui/Menus";
-import Spinner from "../../ui/Spinner";
-import { useNavigate } from "react-router-dom";
-import Button from "../../ui/Button";
+import { useDeleteBooking } from "./useDeleteBooking";
 
 const HeadingGroup = styled.div`
   align-items: center;
@@ -27,6 +30,8 @@ function BookingDetail() {
 
   const moveBack = useMoveBack();
   const navigate = useNavigate();
+  const {checkout, isCheckingOut} = useCheckout();
+  const { deleteBooking, isDeleting } = useDeleteBooking();
 
   if (isLoading) {
     return <Spinner />;
@@ -41,14 +46,14 @@ function BookingDetail() {
     "checked-out": "silver",
   };
 
-  const { id: bookingId, status } = booking;
+  const { id: booking_id, status } = booking;
 
   // We return a fragment so that these elements fit into the page's layout
   return (
     <>
       <Row type='horizontal'>
         <HeadingGroup>
-          <Heading type='h1'>Booking #{bookingId}</Heading>
+          <Heading type='h1'>Booking #{booking_id}</Heading>
           <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
         </HeadingGroup>
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
@@ -61,9 +66,37 @@ function BookingDetail() {
           icon={<HiArrowDownOnSquare />}
           onClick={() => navigate(`/checkIn/${booking_id}`)}
         >
-        Check in
+          Check in
         </Button>}
 
+        {status === "checked-in" && <Button
+          icon={<HiArrowUpOnSquare />}
+          onClick={() => checkout(booking_id)}
+          disabled={isCheckingOut}
+        >
+          Check Out
+        </Button>}
+
+        <Modal>
+          <Modal.Open opens="delete">
+            <Button
+              variation="danger"
+            >
+              Delete booking
+            </Button>
+          </Modal.Open>
+
+          <Modal.Window name="delete">
+            <ConfirmDelete
+              resource="booking"
+              disabled={isDeleting}
+              onConfirm={() => {
+                deleteBooking(booking_id, { onSettled: () => { navigate(-1) } })
+              }}
+            >
+            </ConfirmDelete>
+          </Modal.Window>
+        </Modal>
         <Button variation='secondary' onClick={moveBack}>
           Back
         </Button>

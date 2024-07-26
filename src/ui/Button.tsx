@@ -51,8 +51,8 @@ const variations = {
 };
 
 interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-   variation?: "primary" | "secondary",
-   size?: "medium",
+  variation?: "primary" | "secondary",
+  size?: "medium",
 }
 
 const Button = styled.button<IButtonProps>`

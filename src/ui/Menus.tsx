@@ -126,7 +126,7 @@ const Button = ({ children, icon, onClick }) => {
   const handleClick = () => {
     onClick?.();
     close();
-  }
+  };
 
   return (
     <li>

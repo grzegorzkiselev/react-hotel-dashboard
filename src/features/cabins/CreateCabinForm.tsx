@@ -13,7 +13,7 @@ function CreateCabinForm(
     cabinToEdit = {},
     onClose,
   }: {
-    cabinToEdit: Partial<{ id: string, editValues: string}>,
+    cabinToEdit: Partial<{ id: string, editValues: string }>,
     onClose?: () => void
   },
 ) {

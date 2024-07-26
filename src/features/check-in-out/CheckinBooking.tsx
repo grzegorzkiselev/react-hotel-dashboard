@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import Button from "../../ui/Button";
 import ButtonGroup from "../../ui/ButtonGroup";
@@ -12,7 +13,6 @@ import BookingDataBox from "../bookings/BookingDataBox";
 import { useBooking } from "../bookings/useBooking";
 import { useSettings } from "../settings/useSettings";
 import { useCheckin } from "./useCheckin";
-import styled from "styled-components";
 
 const Box = styled.div`
   /* Box */
@@ -66,7 +66,6 @@ function CheckinBooking() {
     }
   };
 
-  // We return a fragment so that these elements fit into the page's layout
   return (
     <>
       <Row type='horizontal'>
