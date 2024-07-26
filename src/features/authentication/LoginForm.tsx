@@ -18,7 +18,13 @@ function LoginForm() {
       return;
     }
 
-    login({ email, password });
+    login(
+      { email, password },
+      { onSettled: () => {
+        setEmail("");
+        setPassword("");
+      } },
+    );
   }
 
   return (
@@ -27,7 +33,6 @@ function LoginForm() {
         <Input
           type="email"
           id="email"
-          // This makes this form better for password managers
           autoComplete="username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -45,7 +50,9 @@ function LoginForm() {
         />
       </FormRow>
       <FormRow orientation="vertical">
-        <Button size="large" disabled={isLoading}>
+        <Button
+          size="large"
+          disabled={isLoading}>
           {!isLoading ? "Log in" : <SpinnerMini />}
         </Button>
       </FormRow>
