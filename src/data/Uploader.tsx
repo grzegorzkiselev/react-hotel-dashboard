@@ -1,6 +1,6 @@
 import { isFuture, isPast, isToday } from "date-fns";
 import { useState } from "react";
-import supabase from "../services/supabase";
+import { supabase } from "../services/supabase";
 import Button from "../ui/Button";
 import { subtractDates } from "../utils/helpers";
 import { bookings } from "./data-bookings";
