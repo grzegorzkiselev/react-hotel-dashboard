@@ -13,7 +13,7 @@ import PageNotFound from "./pages/PageNotFound";
 import Settings from "./pages/Settings";
 import Users from "./pages/Users";
 import GlobalStyles from "./styles/GlobalStyles";
-import AppLayout from "./ui/AppLayout";
+import AppLayout from './ui/AppLayout';
 import { ProtectedRoute } from "./ui/ProtectedRoute";
 
 const queryClient = new QueryClient({
